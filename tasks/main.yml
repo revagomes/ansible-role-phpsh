@@ -1,0 +1,28 @@
+---
+- name: Install Python Sqlite.
+  apt: "name={{ item }} state=installed"
+  with_items: python-sqlite
+
+- name: Check if the project is already cloned.
+  stat: "path={{ phpsh_path }}/.git"
+  register: phpsh_project_cloned_status
+
+- name: Download phpsh from Git repository. This may take a few minutes...
+  git: >
+    repo={{ phpsh_repo_source }}
+    update=no
+    accept_hostkey=yes
+    dest={{ phpsh_path }}
+  register: phpsh_project_cloned_status
+  when: phpsh_project_cloned_status.stat.exists == false
+
+- name: Build the phpsh.
+  command: >
+    /usr/bin/python setup.py build
+    chdir={{ phpsh_path }}
+
+- name: Install the phpsh.
+  command: >
+    /usr/bin/python setup.py install
+    chdir={{ phpsh_path }}
+  sudo: yes

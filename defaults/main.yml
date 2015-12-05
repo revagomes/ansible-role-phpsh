@@ -1,0 +1,5 @@
+---
+# defaults file for phpsh
+
+phpsh_path: ~/phpsh
+phpsh_repo_source: https://github.com/facebookarchive/phpsh.git

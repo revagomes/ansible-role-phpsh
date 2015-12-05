@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - nbz4live.php-fpm
+    - ansible-role-phpsh
